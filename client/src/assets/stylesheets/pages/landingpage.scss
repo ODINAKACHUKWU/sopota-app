@@ -1,0 +1,16 @@
+@import "../base.scss";
+
+#danger-icon-bg {
+  color: $white;
+  background-color: $card-red;
+}
+
+#info-icon-bg {
+  color: $white;
+  background-color: $card-blue;
+}
+
+#warning-icon-bg {
+  color: $white;
+  background-color: $card-yellow;
+}

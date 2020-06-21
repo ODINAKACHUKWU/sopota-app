@@ -1,11 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import HomePage from "../views/pages/Homepage.jsx";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Routes from "./Routes";
+import PrivateRoute from "./PrivateRoute";
 
 const BaseRoute = () => (
   <Router>
     <Switch>
-      <Route exact path="/" component={HomePage} />
+      {Routes.default.map(({ exact, path, component }, index) => (
+        <Route key={index} exact={exact} path={path} component={component} />
+      ))}
+      {Routes.secured.map(({ exact, path, component }, index) => (
+        <PrivateRoute
+          key={index}
+          exact={exact}
+          path={path}
+          component={component}
+        />
+      ))}
     </Switch>
   </Router>
 );

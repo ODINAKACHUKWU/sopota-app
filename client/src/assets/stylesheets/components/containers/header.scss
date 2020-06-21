@@ -1,0 +1,10 @@
+@import "../../base.scss";
+
+.background {
+  background-color: $dark-primary !important;
+}
+
+#email,
+#navbarDropdown {
+  color: $white;
+}
