@@ -5,6 +5,7 @@ import NotFoundPage from "../views/pages/NotFoundPage";
 import RequestPage from "../views/pages/RequestPage";
 import TicketsPage from "../views/pages/TicketsPage";
 import AccountPage from "../views/pages/AccountPage";
+import TicketPage from "../views/pages/TicketPage";
 
 export default {
   default: [
@@ -30,6 +31,10 @@ export default {
     {
       path: "/tickets",
       component: TicketsPage,
+    },
+    {
+      path: "/tickets/:id",
+      component: TicketPage,
     },
     {
       path: "/account",

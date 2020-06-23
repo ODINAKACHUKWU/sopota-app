@@ -25,12 +25,17 @@ const submitTicketFailure = (error) => ({
   error,
 });
 
-const submitTicketRequest = (payload) => async (dispatch) => {
+const submitTicketRequest = (payload, token) => async (dispatch) => {
   const path = "tickets";
   dispatch(submitting(true));
   try {
     const url = `${BASE_URL}/${path}`;
-    const response = await axios.post(url, payload);
+    const token = localStorage.getItem("token");
+    const response = await axios.post(url, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log(">>>>>>>>>>>", response);
     // const { auth_token, user } = response.data;
     // dispatch(submitTicketSuccess(ticket));

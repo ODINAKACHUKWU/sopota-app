@@ -24,7 +24,6 @@ class AuthorizeApiRequest
   end
   
   def http_auth_header
-    p ">>>>>>>>", headers["Authorization"]
     if headers["Authorization"].present?
       return headers["Authorization"].split(" ").last
     end

@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_17_102445) do
+ActiveRecord::Schema.define(version: 2020_06_22_032235) do
+
+  create_table "agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.boolean "is_available", default: true, null: false
+    t.string "department"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_agents_on_user_id"
+  end
+
+  create_table "tickets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "subject"
+    t.string "description"
+    t.string "department"
+    t.string "status", default: "open", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "agent_id"
+    t.index ["agent_id"], name: "index_tickets_on_agent_id"
+    t.index ["user_id"], name: "index_tickets_on_user_id"
+  end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,7 +48,6 @@ ActiveRecord::Schema.define(version: 2020_06_17_102445) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_admin", default: false, null: false
-    t.boolean "is_agent", default: false, null: false
     t.string "first_name"
     t.string "last_name"
     t.string "phone_number"
@@ -34,4 +55,7 @@ ActiveRecord::Schema.define(version: 2020_06_17_102445) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "agents", "users"
+  add_foreign_key "tickets", "agents"
+  add_foreign_key "tickets", "users"
 end

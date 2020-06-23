@@ -1,10 +1,12 @@
 import React from "react";
 import Dashboard from "../components/containers/Dashboard";
+import TicketList from "../components/containers/TicketList";
 
 const TicketsPage = () => {
   return (
     <Dashboard>
-      <div>Tickets page</div>
+      <h2 className="mb-5">MY TICKETS</h2>
+      <TicketList />
     </Dashboard>
   );
 };

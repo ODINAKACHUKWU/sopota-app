@@ -34,7 +34,7 @@ const Header = ({ loggedInUserEmail }) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to="/account" id="email" className="nav-link">
+              <Link to="/account" id="account-link" className="nav-link">
                 {loggedInUserEmail}
               </Link>
             </li>
