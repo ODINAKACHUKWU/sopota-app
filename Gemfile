@@ -20,6 +20,7 @@ gem 'puma', '~> 3.11'
 gem "jwt"
 gem 'rack-cors'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'public_activity'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

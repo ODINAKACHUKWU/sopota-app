@@ -1,14 +1,17 @@
 class Ticket < ApplicationRecord
+  include PublicActivity::Model
+  tracked
+
   belongs_to :user, class_name: "User", foreign_key: "user_id"
   has_one :agent, class_name: "Agent", foreign_key: "agent_id"
+  has_many :comments, class_name: "Comment", foreign_key: "ticket_id"
 
   validates :subject, presence: true
   validates :description, presence: true
   validates :department, presence: true
   validates :user_id, presence: true
-
+  
   before_create :assign_support_agent
-  after_create :create_ticket_log
 
   def closed?
     status == "closed"
@@ -43,9 +46,5 @@ class Ticket < ApplicationRecord
 
   def fallback
     User.administrators.first
-  end
-
-  def create_ticket_log
-    p "++++++++ I will create a ticket log"
   end
 end

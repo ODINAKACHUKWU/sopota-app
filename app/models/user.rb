@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :tickets, class_name: "Ticket", foreign_key: "user_id"
+  has_many :comments, class_name: "Comment", foreign_key: "user_id"
 
   scope :administrators, -> { where(is_admin: true)}
 end

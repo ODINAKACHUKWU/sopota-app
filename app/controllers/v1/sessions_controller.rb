@@ -3,7 +3,6 @@ class V1::SessionsController < ApplicationController
   skip_before_action :authorize_request, only: :create
 
   def create
-    p ">>>>>>>>>>", params
     if @user&.valid_password?(params[:password])
       token = AuthToken.new(@user).token
       json_response({auth_token: token, user: @user}, :created)
