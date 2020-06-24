@@ -5,6 +5,8 @@ import MDSpinner from "react-md-spinner";
 
 import "../../../assets/stylesheets/components/elements/ticketcard.scss";
 
+// ============ Use class component here
+
 const TicketCard = (props) => {
   const { id, subject, description, department, agent, status } = props.ticket;
   //   const text = status == "closed" ? "Re-open" : "Close";

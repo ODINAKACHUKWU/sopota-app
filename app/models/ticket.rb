@@ -13,12 +13,31 @@ class Ticket < ApplicationRecord
   
   before_create :assign_support_agent
 
+  scope :closed_in_the_last_one_month, -> { where(
+                                            "closed_at <= :start_date AND closed_at >= :end_date", 
+                                            {start_date: DateTime.current, 
+                                            end_date: DateTime.current.months_ago(1)}
+                                          )}
+  
+
   def closed?
     status == "closed"
   end
 
   def open?
     status == "open"
+  end
+
+  def self.to_csv
+    attributes = %w{id subject description department created_at closed_at}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.each do |ticket|
+        csv << ticket.attributes.values_at(*attributes)
+      end
+    end
   end
 
   private

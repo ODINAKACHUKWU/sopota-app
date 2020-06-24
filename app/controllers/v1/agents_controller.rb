@@ -1,10 +1,24 @@
 class V1::AgentsController < ApplicationController
+  # skip_before_action :authorize_request
+  before_action :set_agent
+
   def index
     # All tickets assigned to this agent
   end
 
-  def report
-    # All tickets closed in the last one month
+  def export
+    @tickets = @agent.tickets.closed_in_the_last_one_month
+    json_response(@tickets)
+    # @tickets = Ticket.closed_in_the_last_one_month
+    p ">>>>>>>>>+++++++++", @tickets
+    # respond_to do |format|
+    #   format.html
+    #   format.csv { send_data @tickets.to_csv, filename: "tickets-#{Date.today}.csv" }
+    #   format.json
+    # end
   end
-  # tickets = Ticket.where("closed_at <= :start_date AND closed_at >= :end_date", {start_date: DateTime.current, end_date: DateTime.current.months_ago(1)})
+
+  def set_agent
+    @agent = Agent.find_by(user_id: current_user.id)
+  end
 end

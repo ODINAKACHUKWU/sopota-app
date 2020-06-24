@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, BrowserRouter, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import MDSpinner from "react-md-spinner";
 import ticketValidator from "../../../helpers/validations/ticketValidator";
-import submitTicketRequest from "../../../actions/creators/ticketActions";
+import {
+  submitTicketRequest,
+  submittingTicket,
+  submitTicketSuccess,
+} from "../../../actions/creators/ticketActions";
+
+// =================== Use class component
 
 const TicketForm = () => {
   const [ticketData, setTicketData] = useState({
@@ -12,7 +18,7 @@ const TicketForm = () => {
     department: "",
   });
   const [errors, setError] = useState({});
-  const { submitting, error } = useSelector((state) => state.ticket);
+  const { submitting, ticket, error } = useSelector((state) => state.ticket);
   const dispatch = useDispatch();
 
   const isValid = () => {
@@ -22,6 +28,10 @@ const TicketForm = () => {
     }
     return isValid;
   };
+
+  // if (submitting && ticket) {
+  //   return <Redirect to={`/ticket/${ticket.id}`} />;
+  // }
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -34,12 +44,18 @@ const TicketForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isValid()) {
-      dispatch(submitTicketRequest(ticketData));
+      dispatch(submitTicketRequest(ticketData)).then((ticket) => {
+        dispatch(submittingTicket(false));
+        dispatch(submitTicketSuccess(ticket));
+        // console.log(">>>>>>>>>", props);
+        return <Redirect to={`/ticket/${ticket.id}`} />;
+      });
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {error ? <div className="alert alert-danger">{error}</div> : ""}
       <div className="form-group">
         <label for="subject">Subject</label>
         <input
@@ -83,9 +99,8 @@ const TicketForm = () => {
       {errors.department && (
         <div className="alert alert-danger">{errors.department}</div>
       )}
-
-      <button type="submit" className="btn btn-info" disabled={false}>
-        {/* {submitting ? <MDSpinner /> : "Log in"} */} Submit request
+      <button type="submit" className="btn btn-info" disabled={submitting}>
+        {submitting ? <MDSpinner /> : "Submit request"}
       </button>
     </form>
   );

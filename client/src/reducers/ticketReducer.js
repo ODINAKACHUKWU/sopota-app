@@ -4,11 +4,15 @@ const {
   SUBMITTING_TICKET,
   SUBMIT_TICKET_SUCCESS,
   SUBMIT_TICKET_FAILURE,
+  FETCHING_TICKETS,
+  FETCH_REPORT_DATA,
 } = TYPES;
 
 const initialState = {
   submitting: false,
+  fetchingTickets: false,
   ticket: {},
+  tickets: [],
   error: "",
 };
 
@@ -28,6 +32,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: action.error,
+      };
+    case FETCHING_TICKETS:
+      return {
+        ...state,
+        fetchingTickets: action.bool,
+      };
+    case FETCH_REPORT_DATA:
+      return {
+        ...state,
+        tickets: action.tickets,
       };
     default:
       return state;

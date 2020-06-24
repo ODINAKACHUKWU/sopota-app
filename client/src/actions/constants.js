@@ -11,6 +11,8 @@ const TYPES = keymirror({
   SUBMITTING_TICKET: null,
   SUBMIT_TICKET_SUCCESS: null,
   SUBMIT_TICKET_FAILURE: null,
+  FETCHING_TICKETS: null,
+  FETCH_REPORT_DATA: null,
 });
 
 export default TYPES;

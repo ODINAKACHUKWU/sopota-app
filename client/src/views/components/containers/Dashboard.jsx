@@ -17,7 +17,11 @@ const Dashboard = ({ children }) => {
 
   return (
     <Fragment>
-      <Header loggedInUserEmail={user.email} />
+      <Header
+        loggedInUserEmail={user.email}
+        isAgent={user.is_agent}
+        isAdmin={user.is_admin}
+      />
       <div className="container mt-5">{children}</div>
     </Fragment>
   );

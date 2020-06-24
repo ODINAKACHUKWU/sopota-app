@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,7 +12,7 @@ import Logo from "../elements/Logo.jsx";
 
 import "../../../assets/stylesheets/components/containers/header.scss";
 
-const Header = ({ loggedInUserEmail }) => {
+const Header = ({ loggedInUserEmail, isAgent, isAdmin }) => {
   return (
     <nav className="navbar navbar-expand-lg background navbar-light">
       <div className="container">
@@ -58,14 +58,20 @@ const Header = ({ loggedInUserEmail }) => {
                 <Link to="/account" className="dropdown-item">
                   <FontAwesomeIcon className="mr-2" icon={faUser} /> My account
                 </Link>
-                <div className="dropdown-divider"></div>
-                <Link to="/request" className="dropdown-item">
-                  <FontAwesomeIcon
-                    className="mr-2"
-                    icon={faExclamationTriangle}
-                  />{" "}
-                  Submit a ticket
-                </Link>
+                {isAdmin || isAgent ? (
+                  ""
+                ) : (
+                  <div>
+                    <div className="dropdown-divider"></div>
+                    <Link to="/request" className="dropdown-item">
+                      <FontAwesomeIcon
+                        className="mr-2"
+                        icon={faExclamationTriangle}
+                      />{" "}
+                      Submit a ticket
+                    </Link>
+                  </div>
+                )}
                 <div className="dropdown-divider"></div>
                 <Link to="/tickets" className="dropdown-item">
                   <FontAwesomeIcon className="mr-2" icon={faListAlt} /> My

@@ -21,6 +21,7 @@ gem "jwt"
 gem 'rack-cors'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'public_activity'
+gem 'csv', '~> 3.1', '>= 3.1.5'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

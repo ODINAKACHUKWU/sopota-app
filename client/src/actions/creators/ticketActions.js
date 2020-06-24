@@ -6,18 +6,30 @@ const {
   SUBMITTING_TICKET,
   SUBMIT_TICKET_SUCCESS,
   SUBMIT_TICKET_FAILURE,
+  FETCHING_TICKETS,
+  FETCH_REPORT_DATA,
 } = TYPES;
 
 const { BASE_URL } = constants;
 
-const submitting = (bool) => ({
+const submittingTicket = (bool) => ({
   type: SUBMITTING_TICKET,
   bool,
 });
 
-const submitTicketSuccess = (user) => ({
+const fetchingTickets = (bool) => ({
+  type: FETCHING_TICKETS,
+  bool,
+});
+
+const fetchReportData = (tickets) => ({
+  type: FETCH_REPORT_DATA,
+  tickets,
+});
+
+const submitTicketSuccess = (ticket) => ({
   type: SUBMIT_TICKET_SUCCESS,
-  user,
+  ticket,
 });
 
 const submitTicketFailure = (error) => ({
@@ -27,7 +39,7 @@ const submitTicketFailure = (error) => ({
 
 const submitTicketRequest = (payload, token) => async (dispatch) => {
   const path = "tickets";
-  dispatch(submitting(true));
+  dispatch(submittingTicket(true));
   try {
     const url = `${BASE_URL}/${path}`;
     const token = localStorage.getItem("token");
@@ -36,15 +48,36 @@ const submitTicketRequest = (payload, token) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(">>>>>>>>>>>", response);
-    // const { auth_token, user } = response.data;
-    // dispatch(submitTicketSuccess(ticket));
+    // dispatch(submitTicketSuccess(response.data));
+    return Promise.resolve(response.data);
   } catch (error) {
-    console.log(">>>>>>>>>", error);
     dispatch(submitTicketFailure(error.response.data.message));
-  } finally {
-    dispatch(submitting(false));
+    dispatch(submittingTicket(false));
   }
 };
 
-export default submitTicketRequest;
+const fetchRequestsData = () => async (dispatch) => {
+  const path = "tickets";
+  dispatch(fetchingTickets(true));
+  try {
+    const url = `${BASE_URL}/${path}`;
+    const token = localStorage.getItem("token");
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(fetchReportData(response.data));
+  } catch (error) {
+    console.log(error);
+  } finally {
+    dispatch(fetchingTickets(false));
+  }
+};
+
+export {
+  submitTicketRequest,
+  submitTicketSuccess,
+  submittingTicket,
+  fetchRequestsData,
+};
