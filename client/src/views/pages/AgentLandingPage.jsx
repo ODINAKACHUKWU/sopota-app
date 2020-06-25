@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import Dashboard from "../components/containers/Dashboard";
-import CustomerInterface from "../components/containers/CustomerInterface";
+import AgentInterface from "../components/containers/AgentInterface";
 
 import "../../assets/stylesheets/pages/landingpage.scss";
 
-const LandingPage = () => {
+const AgentLandingPage = () => {
   const {
     user: { first_name },
   } = useSelector((state) => state.auth);
 
+  let account = "agent";
   let greeting = first_name ? `Welcome ${first_name}` : "Welcome";
 
   return (
     <Dashboard>
-      <CustomerInterface greeting={greeting} />
+      <AgentInterface greeting={greeting} account={account} />
     </Dashboard>
   );
 };
 
-export default LandingPage;
+export default AgentLandingPage;

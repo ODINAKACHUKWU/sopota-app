@@ -1,6 +1,6 @@
 import TYPES from "../actions/constants";
 
-const { FETCHING_USER, FETCH_USER, FETCH_USER_FAILURE } = TYPES;
+const { FETCHING_USER, USER_DATA, FETCH_USER_FAILURE } = TYPES;
 
 const initialState = {
   fetching: false,
@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
         ...state,
         fetching: action.bool,
       };
-    case FETCH_USER:
+    case USER_DATA:
       return {
         ...state,
         user: action.user,

@@ -49,10 +49,10 @@ const logoutRequest = () => async (dispatch) => {
     localStorage.removeItem("token");
     dispatch(logoutUser());
   } catch (error) {
-    dispatch(authFailure(error));
+    dispatch(authFailure(error.response.data.message));
   } finally {
     dispatch(processing(false));
   }
 };
 
-export { authSuccess, authFailure, authRequest, logoutRequest };
+export { authFailure, authSuccess, authRequest, logoutRequest };

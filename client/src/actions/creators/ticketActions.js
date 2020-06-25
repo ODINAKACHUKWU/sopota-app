@@ -8,6 +8,8 @@ const {
   SUBMIT_TICKET_FAILURE,
   FETCHING_TICKETS,
   FETCH_REPORT_DATA,
+  FETCH_AGENT_TICKETS,
+  FETCH_TICKETS_FAILURE,
 } = TYPES;
 
 const { BASE_URL } = constants;
@@ -22,8 +24,13 @@ const fetchingTickets = (bool) => ({
   bool,
 });
 
-const fetchReportData = (tickets) => ({
+const fetchReportData = (closedTickets) => ({
   type: FETCH_REPORT_DATA,
+  closedTickets,
+});
+
+const fetchAgentTickets = (tickets) => ({
+  type: FETCH_AGENT_TICKETS,
   tickets,
 });
 
@@ -34,6 +41,11 @@ const submitTicketSuccess = (ticket) => ({
 
 const submitTicketFailure = (error) => ({
   type: SUBMIT_TICKET_FAILURE,
+  error,
+});
+
+const fetchTicketsFailure = (error) => ({
+  type: FETCH_TICKETS_FAILURE,
   error,
 });
 
@@ -48,16 +60,16 @@ const submitTicketRequest = (payload, token) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    // dispatch(submitTicketSuccess(response.data));
-    return Promise.resolve(response.data);
+    dispatch(submitTicketSuccess(response.data));
   } catch (error) {
     dispatch(submitTicketFailure(error.response.data.message));
+  } finally {
     dispatch(submittingTicket(false));
   }
 };
 
-const fetchRequestsData = () => async (dispatch) => {
-  const path = "tickets";
+const fetchReportDataRequest = () => async (dispatch) => {
+  const path = "tickets/report";
   dispatch(fetchingTickets(true));
   try {
     const url = `${BASE_URL}/${path}`;
@@ -69,7 +81,26 @@ const fetchRequestsData = () => async (dispatch) => {
     });
     dispatch(fetchReportData(response.data));
   } catch (error) {
-    console.log(error);
+    dispatch(fetchTicketsFailure(error.message));
+  } finally {
+    dispatch(fetchingTickets(false));
+  }
+};
+
+const fetchAgentTicketsRequest = () => async (dispatch) => {
+  const path = "agent/tickets";
+  dispatch(fetchingTickets(true));
+  try {
+    const url = `${BASE_URL}/${path}`;
+    const token = localStorage.getItem("token");
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(fetchAgentTickets(response.data));
+  } catch (error) {
+    dispatch(fetchTicketsFailure(error.message));
   } finally {
     dispatch(fetchingTickets(false));
   }
@@ -77,7 +108,6 @@ const fetchRequestsData = () => async (dispatch) => {
 
 export {
   submitTicketRequest,
-  submitTicketSuccess,
-  submittingTicket,
-  fetchRequestsData,
+  fetchAgentTicketsRequest,
+  fetchReportDataRequest,
 };

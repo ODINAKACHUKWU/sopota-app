@@ -6,6 +6,8 @@ const {
   SUBMIT_TICKET_FAILURE,
   FETCHING_TICKETS,
   FETCH_REPORT_DATA,
+  FETCH_AGENT_TICKETS,
+  FETCH_TICKETS_FAILURE,
 } = TYPES;
 
 const initialState = {
@@ -13,6 +15,7 @@ const initialState = {
   fetchingTickets: false,
   ticket: {},
   tickets: [],
+  closedTickets: [],
   error: "",
 };
 
@@ -41,7 +44,17 @@ export default (state = initialState, action) => {
     case FETCH_REPORT_DATA:
       return {
         ...state,
+        closedTickets: action.closedTickets,
+      };
+    case FETCH_AGENT_TICKETS:
+      return {
+        ...state,
         tickets: action.tickets,
+      };
+    case FETCH_TICKETS_FAILURE:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;

@@ -4,15 +4,15 @@ import TYPES from "../constants";
 import { authSuccess } from "./authActions";
 
 const { BASE_URL } = constants;
-const { FETCHING_USER, FETCH_USER, FETCH_USER_FAILURE } = TYPES;
+const { FETCHING_USER, USER_DATA, FETCH_USER_FAILURE } = TYPES;
 
 const fetching = (bool) => ({
   type: FETCHING_USER,
   bool,
 });
 
-const fetchUserSuccess = (user) => ({
-  type: FETCH_USER,
+const fetchUser = (user) => ({
+  type: USER_DATA,
   user,
 });
 
@@ -21,24 +21,26 @@ const fetchUserFailure = (error) => ({
   error,
 });
 
-const getLoggedInUser = (id, token) => async (dispatch) => {
+const fetchUserDetailsRequest = (id) => async (dispatch) => {
   const path = `users/${id}`;
   dispatch(fetching(true));
   try {
     const url = `${BASE_URL}/${path}`;
+    const token = localStorage.getItem("token");
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     const user = response.data;
-    dispatch(fetchUserSuccess(user));
     dispatch(authSuccess(user));
+    dispatch(fetchUser(user));
+    // return Promise.resolve(user);
   } catch (error) {
-    dispatch(fetchUserFailure(error.response.data.message));
+    dispatch(fetchUserFailure(error.message));
   } finally {
     dispatch(fetching(false));
   }
 };
 
-export default getLoggedInUser;
+export default fetchUserDetailsRequest;

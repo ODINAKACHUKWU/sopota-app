@@ -1,0 +1,18 @@
+@import "../../base.scss";
+
+#tickets-table {
+  a {
+    color: $black;
+  }
+}
+
+#tickets-table-head {
+  background-color: $dark-primary;
+  color: $white;
+}
+
+#tickets-table-body {
+  tr:hover {
+    background-color: $hover-grey;
+  }
+}
