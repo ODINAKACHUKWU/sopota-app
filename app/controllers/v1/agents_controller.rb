@@ -6,6 +6,11 @@ class V1::AgentsController < ApplicationController
     json_response(@tickets)
   end
 
+  def show
+    @agent = Agent.find(params[:id])
+    json_response(@agent)
+  end
+
   def export
     @tickets = @agent.tickets.closed_in_the_last_one_month
     json_response(@tickets)

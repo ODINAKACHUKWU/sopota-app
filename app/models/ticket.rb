@@ -17,7 +17,7 @@ class Ticket < ApplicationRecord
                                             "closed_at <= :start_date AND closed_at >= :end_date", 
                                             {start_date: DateTime.current, 
                                             end_date: DateTime.current.months_ago(1)}
-                                          )}
+                                            ) }
   
 
   def closed?

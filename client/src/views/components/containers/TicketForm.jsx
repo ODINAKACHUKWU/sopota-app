@@ -51,9 +51,10 @@ class TicketForm extends Component {
     if (this.isValid()) {
       submitTicket(ticketData).then(() => {
         const {
+          ticket,
           history: { push },
         } = this.props;
-        push("/tickets");
+        push(`/tickets/${ticket.id}`);
       });
     }
   };
@@ -123,9 +124,10 @@ TicketForm.propTypes = {
   error: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ ticket: { submitting, error } }) => ({
+const mapStateToProps = ({ ticket: { submitting, error, ticket } }) => ({
   submitting,
   error,
+  ticket,
 });
 
 const mapDispatchToProps = (dispatch) => ({

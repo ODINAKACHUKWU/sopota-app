@@ -35,7 +35,6 @@ const fetchUserDetailsRequest = (id) => async (dispatch) => {
     const user = response.data;
     dispatch(authSuccess(user));
     dispatch(fetchUser(user));
-    // return Promise.resolve(user);
   } catch (error) {
     dispatch(fetchUserFailure(error.message));
   } finally {

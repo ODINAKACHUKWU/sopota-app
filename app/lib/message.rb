@@ -30,5 +30,9 @@ class Message
   def self.expired_token
     "Sorry, your token has expired. Please login to continue."
   end
+
+  def self.no_agent_comment
+    "Sorry your support agent has not commented on this request yet"
+  end
 end
   

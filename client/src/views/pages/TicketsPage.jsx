@@ -9,22 +9,12 @@ import TicketsTable from "../components/elements/TicketsTable";
 import "../../assets/stylesheets/components/elements/ticketstable.scss";
 
 class TicketsPage extends Component {
-  // componentDidMount = () => {
-
-  // };
   render() {
-    const { user, ticket } = this.props;
+    const { user } = this.props;
     return (
       <Dashboard>
         <h2 className="mb-5">MY TICKETS</h2>
-        {Object.keys(ticket).length > 0 ? (
-          <div className="alert alert-success">
-            Your request has been submitted successfully
-          </div>
-        ) : (
-          ""
-        )}
-        {user.tickets ? (
+        {user && user.tickets ? (
           <table class="table table-striped" id="tickets-table">
             <thead className="thead" id="tickets-table-head">
               <tr>
@@ -56,9 +46,8 @@ TicketsPage.propTypes = {
   user: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ user: { user }, ticket: { ticket } }) => ({
+const mapStateToProps = ({ user: { user } }) => ({
   user,
-  ticket,
 });
 
 export default withRouter(connect(mapStateToProps)(TicketsPage));

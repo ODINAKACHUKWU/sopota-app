@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     namespace :admin do
     end
     
-    resources :agents, only: [:index]
+    resources :agents, only: [:index, :show]
     resources :sessions, only: [:create, :destroy]
     resources :users, only: [:create, :show, :update]
     resources :tickets, only: [:create, :show, :update] do

@@ -4,7 +4,7 @@ import Dashboard from "../components/containers/Dashboard";
 const AccountPage = () => {
   return (
     <Dashboard>
-      <div>Account page</div>
+      <h5>My Profile</h5>
     </Dashboard>
   );
 };

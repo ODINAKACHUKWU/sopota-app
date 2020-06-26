@@ -10,6 +10,12 @@ const {
   FETCH_REPORT_DATA,
   FETCH_AGENT_TICKETS,
   FETCH_TICKETS_FAILURE,
+  FETCHING_TICKET,
+  FETCH_TICKET_FAILURE,
+  FETCH_TICKET_SUCCESS,
+  CLOSING_TICKET,
+  CLOSE_TICKET_SUCCESS,
+  CLOSE_TICKET_FAILURE,
 } = TYPES;
 
 const { BASE_URL } = constants;
@@ -49,7 +55,75 @@ const fetchTicketsFailure = (error) => ({
   error,
 });
 
-const submitTicketRequest = (payload, token) => async (dispatch) => {
+const fetchingTicket = (bool) => ({
+  type: FETCHING_TICKET,
+  bool,
+});
+
+const fetchTicketSuccess = (ticket) => ({
+  type: FETCH_TICKET_SUCCESS,
+  ticket,
+});
+
+const fetchTicketFailure = (bool) => ({
+  type: FETCH_TICKET_FAILURE,
+  bool,
+});
+
+const closingTicket = (bool) => ({
+  type: CLOSING_TICKET,
+  bool,
+});
+
+const closeTicketSuccess = (ticket) => ({
+  type: CLOSE_TICKET_SUCCESS,
+  ticket,
+});
+
+const closeTicketFailure = (error) => ({
+  type: CLOSE_TICKET_FAILURE,
+  error,
+});
+
+const closeTicketRequest = (id) => async (dispatch) => {
+  const path = `tickets/${id}`;
+  dispatch(closingTicket(true));
+  try {
+    const url = `${BASE_URL}/${path}`;
+    const token = localStorage.getItem("token");
+    const response = await axios.patch(url, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(closeTicketSuccess(response.data));
+  } catch (error) {
+    dispatch(closeTicketFailure(error.message));
+  } finally {
+    dispatch(closingTicket(false));
+  }
+};
+
+const fetchTicketRequest = (id) => async (dispatch) => {
+  const path = `tickets/${id}`;
+  dispatch(fetchingTicket(true));
+  try {
+    const url = `${BASE_URL}/${path}`;
+    const token = localStorage.getItem("token");
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(fetchTicketSuccess(response.data));
+  } catch (error) {
+    dispatch(fetchTicketFailure(error.message));
+  } finally {
+    dispatch(fetchingTicket(false));
+  }
+};
+
+const submitTicketRequest = (payload) => async (dispatch) => {
   const path = "tickets";
   dispatch(submittingTicket(true));
   try {
@@ -110,4 +184,6 @@ export {
   submitTicketRequest,
   fetchAgentTicketsRequest,
   fetchReportDataRequest,
+  fetchTicketRequest,
+  closeTicketRequest,
 };

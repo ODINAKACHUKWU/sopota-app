@@ -1,6 +1,5 @@
 class AgentSerializer < ActiveModel::Serializer
-  attributes :id, :subject, :description, :department, :status
+  attributes :id, :user_id, :is_available, :department
   belongs_to :user
   has_many :tickets
-  has_many :comments
 end
