@@ -123,6 +123,8 @@ run the command `bundle exec rspec`
 
 1. Admin features: creating of agents and managing of all users and their requests.
 
+2. More testing for business logic.
+
 ## Questions
 
 For more details contact `solomonzbk@gmail.com`
