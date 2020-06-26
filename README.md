@@ -8,7 +8,7 @@ This application is a customer support system that allows customers to create su
 <br />
 <br />
 
-<img width="1440" alt="BEC Homepage" src=".client/assets/images/home.png">
+<img width="1440" alt="BEC Homepage" src="./client/assets/images/home.png">
 
 # Table of Contents
 
