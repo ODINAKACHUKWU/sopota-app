@@ -13,7 +13,7 @@ This application is a customer support system that allows customers to create su
 # Table of Contents
 
 - [Getting Started](#Getting-Started "Goto Getting-Started")
-- [Features yet to be implemented](#Features-yet-to-be-implemented "Features-yet-to-be-implemented")
+- [Tasks yet to be completed](#Tasks-yet-to-be-completed "Tasks-yet-to-be-completed")
 - [Questions](#Questions "Goto Questions")
 
 ## Background
@@ -119,7 +119,7 @@ run the command `bundle exec rspec`
 11. GET /v1/tickets/report (Fetches all tickets assigned to an agent that have been closed in the last one month)
 12. GET /v1/agent/:id (Fetches an agent)
 
-## Features yet to be implemented
+## Tasks yet to be completed
 
 1. Admin features: creating of agents and managing of all users and their requests.
 
